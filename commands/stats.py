@@ -1,3 +1,4 @@
+import logging
 from commands.base import CmdExecutor
 
 
@@ -8,5 +9,6 @@ class StatsExecutor(CmdExecutor):
             '/rank': self.rank
         }
 
-    async def rank(self, params):
+    async def rank(self, param):
+        logging.info("StatsExecutor handled '/rank' cmd with parameters: %s", param)
         return 'rank'
