@@ -1,4 +1,6 @@
+aiohttp
 asyncio
+logging
 pytest
 pytest-asyncio
 discord
