@@ -2,17 +2,6 @@ import os
 import discord
 from rankbot.commands.base import CmdParser
 
-text = ' '
-split = text.split()
-text.isspace()
-
-assert text.isspace()
-
-cmd = split[0]
-data = split[1:]
-print(cmd)
-print(data)
-
 DISCORD_TOKEN = os.getenv("DISCORD_TOKEN")  # get discord token from
 discord_client = discord.Client()
 parser = CmdParser()
