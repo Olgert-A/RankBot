@@ -1,6 +1,6 @@
 import os
 import discord
-from rankbot.commands.base import CmdParser
+from commands.base import CmdParser
 
 DISCORD_TOKEN = os.getenv("DISCORD_TOKEN")  # get discord token from
 discord_client = discord.Client()
