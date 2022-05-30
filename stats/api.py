@@ -31,3 +31,15 @@ class StatsApi:
             params['profile_id'] = profile_id
 
         return await get_response(session, url, params)
+
+    # "https://aoe2.net/api/player/lastmatch?game=aoe2de&steam_id=76561198379389049"
+    @staticmethod
+    async def match(session, steam_id: str):
+        url = "https://aoe2.net/api/player/lastmatch"
+        params = {
+            'game': 'aoe2de',
+            'steam_id': steam_id
+        }
+        logging.debug(f"StatsApi 'match' method called with url:{url} and params steam:{steam_id} ")
+
+        return await get_response(session, url, params)
