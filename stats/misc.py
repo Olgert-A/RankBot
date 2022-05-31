@@ -8,7 +8,7 @@ def formatted(resp: str) -> str:
     return resp[1:len(resp) - 1]
 
 
-def convert_rank(status: int, data: str) -> str:
+def convert_rank(leaderboard: str, status: int, data: str) -> str:
     if status == 200:
         data = formatted(data)
         try:
@@ -16,7 +16,7 @@ def convert_rank(status: int, data: str) -> str:
             wins = int(data['num_wins'])
             loses = data['num_losses']
             winrate = round(100 * wins / (wins + loses))
-            return f"{data['rating']} {winrate}% {data['streak']}"
+            return f"{leaderboard}:{data['rating']} {winrate}% {data['streak']}"
 
         except ValueError:
             logging.debug('Rank conversion raise exception')
