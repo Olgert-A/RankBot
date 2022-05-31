@@ -8,7 +8,7 @@ from stats.misc import *
 
 class StatsChecker:
     @staticmethod
-    async def rank(session: aiohttp.ClientSession, steam_id: str, profile_id: int) -> str:
+    async def rank(session: aiohttp.ClientSession, steam_id: str, profile_id: int = 0) -> str:
         logging.debug(f"StatsChecker.rank: CALLED     steam_id:{steam_id} profile_id:{profile_id}")
         leaderboards = [lb for lb in LeaderboardID if lb != LeaderboardID.UNRANKED]
         tasks = [Api.rating(session, steam_id, profile_id, lb.value) for lb in leaderboards]
