@@ -10,5 +10,5 @@ class StatsExecutor(CmdExecutor):
         }
 
     async def rank(self, param):
-        logging.debug("StatsExecutor handled '/rank' cmd with parameters: %s", param)
+        logging.debug(f"StatsExecutor.rank: CALLED")
         return 'rank'

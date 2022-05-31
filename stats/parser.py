@@ -11,7 +11,7 @@ class StatsParser:
         tasks = [Api.rating(session, steam_id, profile_id, lb.value) for lb in leaderboards]
         ranks_raw = await asyncio.gather(*[asyncio.create_task(t) for t in tasks])
         ranks = [convert_rank(lb.name, status, data) for lb, (status, data) in zip(leaderboards, ranks_raw)]
-        logging.info(f"StatsParser 'rank' success with data: {ranks}")
+        logging.info(f"StatsParser.rank: SUCCESS     result: {ranks}")
         return ' | '.join(ranks)
 
     @staticmethod
