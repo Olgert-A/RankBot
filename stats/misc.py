@@ -11,7 +11,7 @@ def remove_brackets(resp: str) -> str:
 
 def calc_winrate(wins: int, losses: int) -> int:
     """calculate winrate using number of wins and number of losses"""
-    if not (wins + losses):
+    if (wins + losses) != 0:
         return round(100 * wins / (wins + losses))
     else:
         return 0
@@ -44,7 +44,7 @@ def format_time(timestamp: int) -> str:
 
 def format_match_player(data: dict, rank) -> str:
     try:
-        team = data['team'] if data['team'] != -1 else '-'
+        team = data['color'] if data['team'] != -1 else '-'
         return f"{team}: {data['name']} {rank}"
     except ValueError:
         logging.exception(f"format_match_player: conversion raise exception")
