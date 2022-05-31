@@ -1,5 +1,6 @@
 import logging
 import aiohttp
+from stats.misc import LeaderboardID
 
 
 async def get_response(session: aiohttp.ClientSession, url: str, params: dict) -> tuple:
@@ -14,7 +15,7 @@ async def get_response(session: aiohttp.ClientSession, url: str, params: dict) -
 
 class StatsApi:
     @staticmethod
-    async def rating(session, steam_id: str, profile_id: str, leaderboard_id: int):
+    async def rating(session: aiohttp.ClientSession, steam_id: str, profile_id: int, leaderboard_id: int) -> tuple:
         logging.debug(f"StatsApi.rating: CALLED")
         url = "https://aoe2.net/api/player/ratinghistory"
         params = {
@@ -26,12 +27,12 @@ class StatsApi:
 
         if steam_id and not steam_id.isspace():
             params['steam_id'] = steam_id
-        if profile_id and not profile_id.isspace():
+        if profile_id:
             params['profile_id'] = profile_id
         return await get_response(session, url, params)
 
     @staticmethod
-    async def match(session, steam_id: str):
+    async def match(session: aiohttp.ClientSession, steam_id: str) -> tuple:
         logging.debug(f"StatsApi.match: CALLED")
         url = "https://aoe2.net/api/player/lastmatch"
         params = {
