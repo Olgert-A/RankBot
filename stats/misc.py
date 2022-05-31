@@ -1,6 +1,7 @@
 import enum
 import json
 import logging
+from datetime import datetime
 
 
 def remove_brackets(resp: str) -> str:
@@ -33,6 +34,20 @@ def convert_rank(leaderboard: str, status: int, data: str) -> str:
             logging.exception('convert_rank: conversion raise exception')
             return '----'
     else:
+        return '----'
+
+
+def format_time(timestamp: int) -> str:
+    time = datetime.fromtimestamp(timestamp)
+    return time.strftime("Started: %d.%m.%Y %H:%M:%S UTC+0\n")
+
+
+def format_match_player(data: dict, rank) -> str:
+    try:
+        team = data['team'] if data['team'] != -1 else '-'
+        return f"{team}: {data['name']} {rank}"
+    except ValueError:
+        logging.exception(f"format_match_player: conversion raise exception")
         return '----'
 
 
