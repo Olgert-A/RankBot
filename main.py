@@ -1,10 +1,16 @@
+import logging
 import os
 import discord
 from commands.base import CmdParser
+from commands.stats import StatsExecutor
 
 DISCORD_TOKEN = os.getenv("DISCORD_TOKEN")  # get discord token from
 discord_client = discord.Client()
+logging.basicConfig(level=logging.DEBUG)
+
+stats = StatsExecutor()
 parser = CmdParser()
+parser.add(stats)
 
 
 @discord_client.event
