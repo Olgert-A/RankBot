@@ -26,7 +26,7 @@ class StatsChecker:
         try:
             data = json.loads(resp)
             time = format_time(data['last_match']['opened'])
-            players_data = sorted(data['last_match']['players'], key=lambda item: item['team'])
+            players_data = sorted(data['last_match']['players'], key=lambda item: (item['team'], item['color']))
             # get ranks of all players
             tasks = [StatsChecker.rank(session, player['steam_id'], player['profile_id']) for player in players_data]
             ranks = await asyncio.gather(*[asyncio.create_task(t) for t in tasks])
