@@ -14,7 +14,7 @@ async def get_response(session: aiohttp.ClientSession, url: str, params: dict) -
 
 class StatsApi:
     @staticmethod
-    async def rating(session, steam_id: str, profile_id: str, leaderboard_id: int):
+    async def rating(session: aiohttp.ClientSession, steam_id: str, profile_id: int, leaderboard_id: int):
         url = "https://aoe2.net/api/player/ratinghistory"
         params = {
             'game': 'aoe2de',
@@ -26,9 +26,9 @@ class StatsApi:
         logging.debug(f"StatsApi 'rating' method called with url:{url} and params "
                       f"steam:{steam_id} profile:{profile_id} leaderboard:{leaderboard_id}")
 
-        if steam_id and steam_id != '':
+        if steam_id and not steam_id.isspace():
             params['steam_id'] = steam_id
-        if profile_id and profile_id != '':
+        if profile_id:
             params['profile_id'] = profile_id
 
         return await get_response(session, url, params)
