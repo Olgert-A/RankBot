@@ -19,10 +19,8 @@ async def on_message(message):
         return
 
     response = await commands_parser.parse(message)
-    if not response:
-        response = 'Command not found'
-
-    await message.channel.send(response)
+    if response:
+        await message.channel.send(response)
 
 
 discord_client.run(DISCORD_TOKEN)
