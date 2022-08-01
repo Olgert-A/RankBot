@@ -1,33 +1,48 @@
 import pytest
-from commands.base import CmdExecutor
+from commands.base import CmdParser
+from commands.stats import StatsExecutor
+
+# =======some data for next base tests=========
+
+
+class Message:
+    def __init__(self, content):
+        self.content = content
+
+
+empty1 = Message('')
+empty2 = Message(' ')
+rank = Message('/rank')
+rank_param = Message('/rank 12 34')
+trash = Message('trash  data 1 ')
+
+# =============================================
 
 
 @pytest.mark.asyncio
 async def test_executor():
-    class Message:
-        def __init__(self, content):
-            self.content = content
+    stats = StatsExecutor()
 
-    class SomeExecutor(CmdExecutor):
-        def __init__(self):
-            super().__init__()
+    assert await stats.execute(empty1) == ''
+    assert await stats.execute(empty2) == ''
+    assert await stats.execute(rank) != ''
+    assert await stats.execute(rank_param) != ''
+    assert await stats.execute(trash) == ''
 
-            self._commands = {
-                '/some': self.some,
-                '/wparam': self.wparam
-            }
 
-        async def some(self, param):
-            return 'Some executed'
+@pytest.mark.asyncio
+async def test_parser():
+    stats1 = StatsExecutor()
+    stats2 = StatsExecutor()
+    parser = CmdParser()
 
-        async def wparam(self, param):
-            return 'With param'
+    parser.add(stats1)
+    parser.add(stats2)
+    parser.add(stats1)
+    parser.delete(stats2)
 
-    m1 = Message('/some')
-    m2 = Message('/wparam 12 34')
-    m3 = Message('some')
-    e = SomeExecutor()
-    assert await e.execute(m1) == 'Some executed'
-    assert await e.execute(m2) == 'With param'
-    assert await e.execute(m3) == ''
-
+    assert await parser.parse(empty1) == ''
+    assert await parser.parse(empty2) == ''
+    assert await parser.parse(rank) != ''
+    assert await parser.parse(rank_param) != ''
+    assert await parser.parse(trash) == ''
